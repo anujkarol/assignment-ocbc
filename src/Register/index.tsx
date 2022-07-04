@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { Error } from "../components/Input/style";
 import { Loader } from "../components/Loader";
 import {
   BACK_TO_LOGIN,
@@ -53,7 +54,7 @@ export const Register = () => {
     setLoader(false);
 
     if (registerData.status === "failed") {
-      const validationFailed = registerData.description;
+      const validationFailed = registerData.error;
       setFieldError({
         ...fieldError,
         password: "",
@@ -90,6 +91,11 @@ export const Register = () => {
     <Wrapper>
       <LinkText to="/">{BACK_TO_LOGIN}</LinkText>
       <Title data-testid="page-regsiter">{REGISTER_TO_OCBC}</Title>
+      {fieldError.validationFailed && (
+        <Error data-testid="server-validation">
+          {fieldError.validationFailed}
+        </Error>
+      )}
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
