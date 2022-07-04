@@ -1,6 +1,6 @@
 export const initialTransferState = {
-  recipientAccountNo: "",
-  amount: '',
+  receipientAccountNo: "",
+  amount: "",
   description: "",
   date: ""
 };

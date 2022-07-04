@@ -1,7 +1,7 @@
 import validateForm from "../utils/validateTransfer";
 
 const values = {
-  recipientAccountNo: "",
+  receipientAccountNo: "",
   amount: "",
   description: "",
   date: ""
@@ -9,7 +9,7 @@ const values = {
 test("WHEN userdata is wrong THEN it should form validity", () => {
   expect(
     validateForm({
-      recipientAccountNo: "anuj",
+      receipientAccountNo: "anuj",
       amount: "123",
       description: "test",
       date: "312433545"
@@ -26,7 +26,7 @@ test("WHEN userdata is empty THEN it should errors and form validity", () => {
     errors: {
       amount: "Amount is required",
       date: "Date is required",
-      recipientAccountNo: "Please select recipient"
+      receipientAccountNo: "Please select recipient"
     }
   });
 });

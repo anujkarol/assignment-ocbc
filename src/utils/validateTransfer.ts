@@ -1,7 +1,7 @@
 import * as errorConstant from "../constants/errors";
 
 interface IValidateTransfer {
-  recipientAccountNo: string;
+  receipientAccountNo: string;
   amount: string;
   description: string;
   date: string;
@@ -20,8 +20,8 @@ const validateTransfer = (
 
   let isFormValid = true;
 
-  if (!transferValue.recipientAccountNo) {
-    errors["recipientAccountNo"] = recepient.empty;
+  if (!transferValue.receipientAccountNo) {
+    errors["receipientAccountNo"] = recepient.empty;
     isFormValid = false;
   }
   if (!transferValue.amount) {

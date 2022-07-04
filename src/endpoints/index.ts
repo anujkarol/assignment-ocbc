@@ -1,8 +1,8 @@
 export const endpoints = {
-  balances: "account/balances",
-  login: "authenticate/login",
+  balances: "balance",
+  login: "login",
   register: "register",
-  payee: "account/payees",
-  transactions: "account/transactions",
+  payee: "payees",
+  transactions: "transactions",
   transfer: "transfer"
 };

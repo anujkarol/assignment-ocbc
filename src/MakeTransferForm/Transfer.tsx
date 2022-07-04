@@ -16,7 +16,7 @@ import { Error } from "../components/Input/style";
 export interface ITransferState {
   amount: any;
   description: string;
-  recipientAccountNo: string;
+  receipientAccountNo: string;
   date: string;
 }
 
@@ -67,10 +67,10 @@ export const Transfer = (): JSX.Element => {
       return;
     }
 
-    const { recipientAccountNo, amount, description, date } = transfer;
+    const { receipientAccountNo, amount, description, date } = transfer;
 
     const newData = {
-      recipientAccountNo,
+      receipientAccountNo,
       amount: +amount,
       description,
       date
@@ -87,7 +87,7 @@ export const Transfer = (): JSX.Element => {
         ...fieldError,
         description: "",
         amount: "",
-        recipientAccountNo: "",
+        receipientAccountNo: "",
         date: "",
         validationFailed
       });
@@ -117,7 +117,7 @@ export const Transfer = (): JSX.Element => {
     });
   };
 
-  const { recipientAccountNo, amount, date, description } = transfer;
+  const { receipientAccountNo, amount, date, description } = transfer;
 
   return (
     <Wrapper>
@@ -130,11 +130,11 @@ export const Transfer = (): JSX.Element => {
       )}
       <form onSubmit={handleTransfer}>
         <Select
-          name="recipientAccountNo"
+          name="receipientAccountNo"
           label="Select Payee Name"
           handleChange={handleChange}
-          value={recipientAccountNo}
-          error={fieldError["recipientAccountNo"]}
+          value={receipientAccountNo}
+          error={fieldError["receipientAccountNo"]}
         >
           {getPayees}
         </Select>

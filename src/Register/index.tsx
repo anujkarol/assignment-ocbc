@@ -44,7 +44,10 @@ export const Register = () => {
     }
     const registerData = await client(endpoints.register, {
       method: "POST",
-      data: credentials
+      data: {
+        username: credentials.username,
+        password: credentials.password
+      }
     });
 
     setLoader(false);
