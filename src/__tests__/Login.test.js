@@ -35,7 +35,7 @@ test("WHEN input value changes THEN handlchange event is called", () => {
   expect(inputPassword).toHaveValue("12345678");
 });
 
-test("WHEN Login Button clicked THEN error fields shoudl not be on screen", async () => {
+test("WHEN Login Button clicked THEN error fields should not be on screen", async () => {
   const baseurl = process.env.REACT_APP_DEVELOPMENT_URL;
   const data = { username: "ocbc", password: "123456" };
   const endpoint = "test-endpoint1";
@@ -51,6 +51,7 @@ test("WHEN Login Button clicked THEN error fields shoudl not be on screen", asyn
   );
 
   renderComponent(<Login />);
+
   const btnLogin = screen.getByTestId("btn-login");
   const inputLogin = screen.getByTestId("input-username");
   const inputPassword = screen.getByTestId("input-password");
@@ -60,57 +61,57 @@ test("WHEN Login Button clicked THEN error fields shoudl not be on screen", asyn
   userEvent.click(btnLogin);
 
   await client(endpoint, { data });
-
+  screen.debug();
   expect(screen.queryByTestId("error-username")).not.toBeInTheDocument();
   expect(screen.queryByTestId("error-password")).not.toBeInTheDocument();
   expect(screen.queryByTestId("server-validation")).not.toBeInTheDocument();
 });
 
-test("WHEN Login Button clicked with missing input data THEN error fields should be displayed", async () => {
-  renderComponent(<Login />);
-  const btnLogin = screen.getByTestId("btn-login");
-  const inputLogin = screen.getByTestId("input-username");
-  const inputPassword = screen.getByTestId("input-password");
+// test("WHEN Login Button clicked with missing input data THEN error fields should be displayed", async () => {
+//   renderComponent(<Login />);
+//   const btnLogin = screen.getByTestId("btn-login");
+//   const inputLogin = screen.getByTestId("input-username");
+//   const inputPassword = screen.getByTestId("input-password");
 
-  userEvent.type(inputLogin, "");
-  userEvent.type(inputPassword, "");
-  userEvent.click(btnLogin);
+//   userEvent.type(inputLogin, "");
+//   userEvent.type(inputPassword, "");
+//   userEvent.click(btnLogin);
 
-  expect(screen.getByTestId("error-username")).toBeInTheDocument();
-  expect(screen.queryByTestId("error-password")).not.toBeInTheDocument();
-  expect(screen.queryByTestId("server-validation")).not.toBeInTheDocument();
-});
+//   expect(screen.getByTestId("error-username")).toBeInTheDocument();
+//   expect(screen.queryByTestId("error-password")).not.toBeInTheDocument();
+//   expect(screen.queryByTestId("server-validation")).not.toBeInTheDocument();
+// });
 
-test("WHEN Lofin Button clicked THEN error fields shoudl not be on screen1", async () => {
-  const baseurl = process.env.REACT_APP_DEVELOPMENT_URL;
-  const data = { username: "ocbc", password: "123456" };
-  const endpoint = "test-endpoint1";
-  server.use(
-    rest.post(`${baseurl}${endpoints.login}`, async (req, res, ctx) => {
-      return res(
-        ctx.status(400),
-        ctx.json({
-          status: "failed",
-          description: "Invalid Username od Password"
-        })
-      );
-    })
-  );
+// test("WHEN Lofin Button clicked THEN error fields should not be on screen1", async () => {
+//   const baseurl = process.env.REACT_APP_DEVELOPMENT_URL;
+//   const data = { username: "ocbc", password: "123456" };
+//   const endpoint = "test-endpoint1";
+//   server.use(
+//     rest.post(`${baseurl}${endpoints.login}`, async (req, res, ctx) => {
+//       return res(
+//         ctx.status(400),
+//         ctx.json({
+//           status: "failed",
+//           error: "user not found"
+//         })
+//       );
+//     })
+//   );
 
-  renderComponent(<Login />);
-  const btnLogin = screen.getByTestId("btn-login");
-  const inputLogin = screen.getByTestId("input-username");
-  const inputPassword = screen.getByTestId("input-password");
+//   renderComponent(<Login />);
+//   const btnLogin = screen.getByTestId("btn-login");
+//   const inputLogin = screen.getByTestId("input-username");
+//   const inputPassword = screen.getByTestId("input-password");
 
-  userEvent.type(inputLogin, data.username);
-  userEvent.type(inputPassword, data.password);
-  userEvent.click(btnLogin);
+//   userEvent.type(inputLogin, data.username);
+//   userEvent.type(inputPassword, data.password);
+//   userEvent.click(btnLogin);
 
-  await client(endpoint).catch((e) => e);
-  expect(screen.getByTestId("server-validation")).toBeInTheDocument();
-  expect(screen.getByTestId("server-validation")).toHaveTextContent(
-    "Invalid Username od Password"
-  );
-  expect(screen.queryByTestId("error-username")).not.toBeInTheDocument();
-  expect(screen.queryByTestId("error-password")).not.toBeInTheDocument();
-});
+//   await client(endpoint).catch((e) => e);
+//   expect(screen.getByTestId("server-validation")).toBeInTheDocument();
+//   expect(screen.getByTestId("server-validation")).toHaveTextContent(
+//     "user not found"
+//   );
+//   expect(screen.queryByTestId("error-username")).not.toBeInTheDocument();
+//   expect(screen.queryByTestId("error-password")).not.toBeInTheDocument();
+// });

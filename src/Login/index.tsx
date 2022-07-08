@@ -29,7 +29,7 @@ export interface IUserError {
 }
 
 export const Login = (): JSX.Element => {
-  const [credentials, setcCedentials] =
+  const [credentials, setcCredentials] =
     useState<IUserCredentials>(initialLoginState);
   const [fieldError, setFieldError] = useState<IUserError>(initialLoginState);
   const [loader, setLoader] = useState<boolean>(false);
@@ -65,7 +65,7 @@ export const Login = (): JSX.Element => {
     setLoader(false);
 
     if (loginData.status === "failed") {
-      const validationFailed = loginData.description;
+      const validationFailed = loginData.error;
       setFieldError({
         ...fieldError,
         password: "",
@@ -82,12 +82,12 @@ export const Login = (): JSX.Element => {
       setFieldError({});
     }
     setFieldError(initialLoginState);
-    setcCedentials(initialLoginState);
+    setcCredentials(initialLoginState);
   };
 
   const handleChange = (e: FormEvent): void => {
     const { name, value } = e.target as HTMLInputElement;
-    setcCedentials({
+    setcCredentials({
       ...credentials,
       [name]: value
     });
@@ -96,10 +96,6 @@ export const Login = (): JSX.Element => {
   const handleRegister = () => {
     navigate("/register");
   };
-
-  // const handleBackToLogin = () => {
-  //   navigate("/");
-  // };
 
   if (loader) {
     return <Loader />;

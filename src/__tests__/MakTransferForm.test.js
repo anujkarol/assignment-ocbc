@@ -13,28 +13,25 @@ const createRouterWrapper =
   ({ children }) =>
     <Router history={history}>{children}</Router>;
 const renderComponent = (component) => render(<Router>{component}</Router>);
-test("WHEN form Page Loads THEN pagetitle and account holde name should be present", () => {
+test("WHEN form Page Loads THEN pagetitle and account holde name should be present", async () => {
   const history = createMemoryHistory();
+
   render(<MakeTransfer />, { wrapper: createRouterWrapper(history) });
-  const welcome = screen.getByTestId("welcome");
-  const title = screen.getByTestId("transaction-history");
-  const name = screen.getByTestId("accountholder-name");
 
-  expect(welcome).toHaveTextContent(WELCOME);
-  expect(title).toHaveTextContent(TRANSACTION_HISTORY);
-  expect(name).toHaveTextContent("Anuj Karol");
-});
+  await waitFor(() => {
+    const welcome = screen.getByTestId("welcome");
+    expect(welcome).toHaveTextContent(WELCOME);
+  });
 
-test("WHEN form Page Loads THEN pagetitle and account holde name should be present1", () => {
-  const history = createMemoryHistory();
-  render(<MakeTransfer />, { wrapper: createRouterWrapper(history) });
-  const welcome = screen.getByTestId("welcome");
-  const title = screen.getByTestId("transaction-history");
-  const name = screen.getByTestId("accountholder-name");
+  await waitFor(() => {
+    const title = screen.getByTestId("transaction-history");
+    expect(title).toHaveTextContent(TRANSACTION_HISTORY);
+  });
 
-  expect(welcome).toHaveTextContent(WELCOME);
-  expect(title).toHaveTextContent(TRANSACTION_HISTORY);
-  expect(name).toHaveTextContent("Anuj Karol");
+  await waitFor(() => {
+    const name = screen.getByTestId("accountholder-name");
+    expect(name).toHaveTextContent("Anuj Karol");
+  });
 });
 
 test("WHEN Login Button clicked THEN error fields shoudl not be on screen", async () => {

@@ -20,7 +20,11 @@ export const Input = ({
 }: IInput): JSX.Element => {
   return (
     <Wrapper>
-      <Label id={`input-${name}`} data-testid={`label-${name}`}>
+      <Label
+        id={`input-${name}`}
+        data-testid={`label-${name}`}
+        htmlFor={`input-${name}`}
+      >
         {label}
       </Label>
       <InputComponent

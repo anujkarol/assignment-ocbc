@@ -72,8 +72,7 @@ export const Transfer = (): JSX.Element => {
     const newData = {
       receipientAccountNo,
       amount: +amount,
-      description,
-      date
+      description
     };
 
     const getData = await client(endpoints.transfer, {
@@ -82,7 +81,7 @@ export const Transfer = (): JSX.Element => {
     });
 
     if (getData.status === "failed") {
-      const validationFailed = getData.description;
+      const validationFailed = getData.error;
       setFieldError({
         ...fieldError,
         description: "",
@@ -103,7 +102,7 @@ export const Transfer = (): JSX.Element => {
   const getPayees = (payeeNames || []).map((payee: any, index: number) => {
     return (
       <option value={payee.accountNo} key={index} data-testid="select-option">
-        {payee.accountNo} | {payee.accountHolderName}
+        {payee.accountNo} | {payee.name}
       </option>
     );
   });

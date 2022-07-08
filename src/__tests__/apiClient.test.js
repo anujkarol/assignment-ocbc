@@ -21,7 +21,6 @@ test("WHEN calls fetch at the endpoint with the arguments for GET requests THEN 
 
 test("when data is provided, it is stringified and the method defaults to POST", async () => {
   const endpoint = "test-endpoint1";
-  console.log("URL", `${baseurl}${endpoint}`);
   server.use(
     rest.post(`${baseurl}${endpoint}`, async (req, res, ctx) => {
       return res(ctx.json(req.body));

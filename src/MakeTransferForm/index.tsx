@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { Label } from "../components/Input/style";
+import { Loader } from "../components/Loader";
 import {
   ACCOUNT_NO,
   LOGOUT,
@@ -31,7 +32,7 @@ import {
 
 interface IRecepient {
   accountNo: string;
-  accountHolderName: string;
+  accountHolder: string;
 }
 interface ITransactions {
   id: string;
@@ -43,24 +44,25 @@ interface ITransactions {
   date: string;
 }
 const transactionHistory = (transactions: ITransactions[]) =>
-  transactions.map((item: any, key: number) => {
-    const keyName = item.type === "transfer" ? "to" : "from";
-
+  (transactions || []).map((item: any, key: number) => {
+    const keyName =
+      item.transactionType === "received" ? "sender" : "receipient";
     return (
       <TransactionDay key={item.id}>
-        <Date>{item.date}</Date>
+        <Date>{item.transactionDate}</Date>
         <Transaction>
           <TransactionAccount>
-            <span>{item[keyName].accountHolderName}</span>
+            <span>{item[keyName]?.accountHolder}</span>
             <TransactionAccountNo>
-              {item[keyName].accountNo}
+              {item[keyName]?.accountNo}
             </TransactionAccountNo>
           </TransactionAccount>
-          <Amount type={item.type}>
-            {item.type === "transfer" ? "-" : ""}
+          <Amount type={item.transactionType}>
+            {item.transactionType === "transfer" ? "-" : ""}
             {formattedNumber(item.amount)}
           </Amount>
         </Transaction>
+        <div>{item.description}</div>
       </TransactionDay>
     );
   });
@@ -69,25 +71,29 @@ export const MakeTransfer = (): JSX.Element => {
   const client = useClient();
   const [transactions, setTransactions] = useState();
   const [balance, setBalance] = useState();
+  const [loader, setLoader] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoader(true);
     const getTransactions = async () => {
       const transactionsData = await client(endpoints.transactions, {
         method: "GET"
       });
-      console.log("TRANSACTIONS", transactionsData);
+      setLoader(false);
       setTransactions(transactionsData);
     };
     getTransactions();
   }, [client]);
 
   useEffect(() => {
+    setLoader(true);
     const getUsers = async () => {
       const balanceData = await client(endpoints.balances, {
         method: "GET"
       });
 
       console.log("BALANCES", balanceData);
+      setLoader(false);
       setBalance(balanceData);
     };
     getUsers();
@@ -95,6 +101,10 @@ export const MakeTransfer = (): JSX.Element => {
 
   const balanceAmount = balance ? balance["balance"] : 0;
   const transactionData = transactions ? transactions["data"] : [];
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <Wrapper>

@@ -40,10 +40,14 @@ export const Name = styled.h1`
 export const TransactionHistory = styled.div`
   background: #fff;
   padding: 24px;
+  margin: 24px;
+  max-height: calc((100vh - 260px) - 30vh);
+  overflow-y: auto;
 `;
 export const TransactionDay = styled.div`
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
   &:last-child {
     margin-bottom: 0;
     border-bottom: 0;
