@@ -1,5 +1,6 @@
 import { IUserCredentials } from "../Login/index";
 import * as errorConstant from "../constants/errors";
+
 export type IERRORS = {
   [key: string]: string;
 };
@@ -7,7 +8,7 @@ const validateForm = ({
   username,
   password
 }: IUserCredentials): { isFormValid: boolean; errors: IERRORS } => {
-  let errors: IERRORS = {};
+  let errors: IERRORS = {}; // use const
 
   const { username: eUserName, password: ePassword } = errorConstant.errors;
 

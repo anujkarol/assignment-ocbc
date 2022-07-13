@@ -16,6 +16,13 @@ async function client(endpoint, { data, token, headers: customHeaders } = {}) {
   return fetch(URL, config).then(async (response) => {
     try {
       const data = await response.json();
+      if (data.status === "failed" && data.error.name === "JsonWebTokenError") {
+        console.log(data);
+        localStorage.getItem["token"] = "";
+        localStorage.getItem["username"] = "";
+        window.location.pathname = "/";
+        throw new Error();
+      }
       return data;
     } catch {
       return Promise.reject(data);

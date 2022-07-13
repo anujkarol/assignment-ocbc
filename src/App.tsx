@@ -1,6 +1,7 @@
-import { MemoryRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import { createBrowserHistory } from "history";
 import { Layout } from "./Layout";
 import { Login } from "./Login";
 import { MakeTransfer } from "./MakeTransferForm";
@@ -8,7 +9,7 @@ import { Completion } from "./MakeTransferForm/Completion";
 import { Transfer } from "./MakeTransferForm/Transfer";
 import { Register } from "./Register";
 
-
+const history = createBrowserHistory();
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;

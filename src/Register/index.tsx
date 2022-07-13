@@ -64,7 +64,7 @@ export const Register = () => {
 
     if (registerData.status === "success") {
       localStorage.setItem("token", registerData.token);
-      navigate("/login");
+      navigate("/makeTransfer");
       setLoader(false);
       setFieldError({});
     }

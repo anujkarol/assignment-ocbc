@@ -47,7 +47,7 @@ export const Login = (): JSX.Element => {
     e.preventDefault();
     setLoader(true);
 
-    let checkFormValidity = validateForm(credentials);
+    let checkFormValidity = validateForm(credentials); // use cont
     const { isFormValid, errors } = checkFormValidity;
     if (!isFormValid) {
       setFieldError({
@@ -105,6 +105,8 @@ export const Login = (): JSX.Element => {
   if (loader) {
     return <Loader />;
   }
+  // Form as child
+  // text field outside form
 
   return (
     <Wrapper>
