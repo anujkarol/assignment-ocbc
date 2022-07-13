@@ -10,7 +10,6 @@ test("WHEN calls fetch at the endpoint with the arguments for GET requests THEN 
 
   server.use(
     rest.get(`${baseurl}${endpoint}`, async (req, res, ctx) => {
-      console.log("ANUJ1", req);
       return res(ctx.json(mockResult));
     })
   );

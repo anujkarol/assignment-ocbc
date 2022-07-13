@@ -14,7 +14,7 @@ export const Input = ({
   type,
   name,
   value,
-  handleChange,
+  handleChange: onChange,
   label,
   error
 }: IInput): JSX.Element => {
@@ -34,7 +34,7 @@ export const Input = ({
         name={name}
         data-testid={`input-${name}`}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
       />
       {error && <Error data-testid={`error-${name}`}>{error}</Error>}
     </Wrapper>

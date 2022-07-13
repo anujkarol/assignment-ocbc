@@ -24,12 +24,13 @@ export const Select = ({
       </Label>
       <SelectComponent
         onChange={handleChange}
+        defaultValue="anuj"
         name={name}
         data-testid={`select-${name}`}
       >
-        <option selected disabled hidden>
+        {/* <option  disabled hidden>
           Select Payee Name
-        </option>
+        </option> */}
         {children}
       </SelectComponent>
       {error && <Error data-testid={`error-${name}`}>{error}</Error>}

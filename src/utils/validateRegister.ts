@@ -16,7 +16,6 @@ const validateRegisterForm = ({
     confirmpassword: econfirmpassword
   } = errorConstant.errors;
 
-  debugger;
   if (!username.trim()) {
     errors["username"] = eUserName.empty;
     return { isFormValid: false, errors };
@@ -31,7 +30,6 @@ const validateRegisterForm = ({
     errors["password"] = ePassword.length;
     return { isFormValid: false, errors };
   }
-  debugger;
   if (!confirmpassword.trim()) {
     errors["confirmpassword"] = econfirmpassword.invalid;
     return { isFormValid: false, errors };

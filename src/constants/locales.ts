@@ -44,11 +44,3 @@ export const ERRORS = {
     DOWN: "Server Down, Please try again after some!"
   }
 };
-
-// export const  PASSWORD_SHOULD_BE_MIN_6_CHARACTERS= 'Password should be min 6 characters'
-// export const  = ''
-// export const  = ''
-// export const  = ''
-// export const  = ''
-// export const  = ''
-// export const  = ''

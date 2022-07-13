@@ -53,7 +53,6 @@ export const Transfer = (): JSX.Element => {
 
   const handleTransfer = async (e: FormEvent) => {
     e.preventDefault();
-    debugger;
 
     let checkFormValidity = validateTransfer(transfer);
 

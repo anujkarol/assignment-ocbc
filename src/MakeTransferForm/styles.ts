@@ -29,7 +29,7 @@ export const AccountHolder = styled.div`
 export const AccountNo = styled.p`
   color: #ccc;
 `;
-export const Balance = styled.h2<{ amount: number }>`
+export const Balance = styled.h2<{ amount: number | {} }>`
   color: ${(props) => (props.amount > 0 ? "green" : "red")};
   margin: 10px 0;
 `;
@@ -53,10 +53,10 @@ export const TransactionDay = styled.div`
     border-bottom: 0;
   }
 `;
-export const Date = styled.div`
+export const DateWrapper = styled.div`
   margin-bottom: 10px;
   font-weight: bold;
-  padding: 5px;
+  padding: 5px 0;
   font-size: 14px;
 `;
 

@@ -29,7 +29,7 @@ export interface IUserError {
 }
 
 export const Login = (): JSX.Element => {
-  const [credentials, setcCredentials] =
+  const [credentials, setcCedentials] =
     useState<IUserCredentials>(initialLoginState);
   const [fieldError, setFieldError] = useState<IUserError>(initialLoginState);
   const [loader, setLoader] = useState<boolean>(false);
@@ -40,6 +40,7 @@ export const Login = (): JSX.Element => {
 
   useEffect(() => {
     localStorage.setItem("token", "");
+    localStorage.setItem("username", "");
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -56,7 +57,6 @@ export const Login = (): JSX.Element => {
       setLoader(false);
       return;
     }
-    debugger;
     const loginData = await client(endpoints.login, {
       method: "POST",
       data: credentials
@@ -77,17 +77,18 @@ export const Login = (): JSX.Element => {
 
     if (loginData.status === "success") {
       localStorage.setItem("token", loginData.token);
+      localStorage.setItem("username", loginData.username);
       navigate("/maketransfer");
       setLoader(false);
       setFieldError({});
     }
     setFieldError(initialLoginState);
-    setcCredentials(initialLoginState);
+    setcCedentials(initialLoginState);
   };
 
   const handleChange = (e: FormEvent): void => {
     const { name, value } = e.target as HTMLInputElement;
-    setcCredentials({
+    setcCedentials({
       ...credentials,
       [name]: value
     });
@@ -96,6 +97,10 @@ export const Login = (): JSX.Element => {
   const handleRegister = () => {
     navigate("/register");
   };
+
+  // const handleBackToLogin = () => {
+  //   navigate("/");
+  // };
 
   if (loader) {
     return <Loader />;

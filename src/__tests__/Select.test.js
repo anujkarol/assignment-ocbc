@@ -20,7 +20,7 @@ test("WHEN select value changes THEN select renders with correct value", () => {
   const text = ["payee name 1", "payee name 2", "payee name 3"];
   const options = text.map((option, key) => {
     return (
-      <option index={key} data-testid="select-option">
+      <option key={Math.random()} data-testid="select-option">
         {option}
       </option>
     );

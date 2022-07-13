@@ -29,8 +29,6 @@ export const Register = () => {
   const navigate = useNavigate();
   const client = useClient();
 
-  // const { error, fetch: getData, data } = useFetch();
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     let checkFormValidity = validateRegisterForm(credentials);
@@ -66,7 +64,7 @@ export const Register = () => {
 
     if (registerData.status === "success") {
       localStorage.setItem("token", registerData.token);
-      navigate("/maketransfer");
+      navigate("/login");
       setLoader(false);
       setFieldError({});
     }

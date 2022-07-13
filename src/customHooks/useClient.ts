@@ -6,7 +6,7 @@ interface IConfig {
   method: "GET" | "POST";
   headers: any;
 }
-export function useClient() {
+export function useClient () {
   const localStorageToken = localStorage as Storage;
   const token = localStorageToken["token"];
   return useCallback(
@@ -16,3 +16,4 @@ export function useClient() {
     [token]
   );
 }
+ 

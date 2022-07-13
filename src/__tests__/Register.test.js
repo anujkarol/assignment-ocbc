@@ -1,11 +1,8 @@
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor, act } from "@testing-library/react";
-
-import * as router from "react-router-dom";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter as Router } from "react-router-dom";
 import { rest } from "msw";
 import { server } from "../mocks/server";
-import { Select } from "../components/Select";
 import { Register } from "../Register";
 import { client } from "../customHooks/apiClient";
 

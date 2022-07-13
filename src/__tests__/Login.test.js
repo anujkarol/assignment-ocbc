@@ -39,12 +39,24 @@ test("WHEN Login Button clicked THEN error fields should not be on screen", asyn
   const baseurl = process.env.REACT_APP_DEVELOPMENT_URL;
   const data = { username: "ocbc", password: "123456" };
   const endpoint = "test-endpoint1";
+  // server.use(
+  //   rest.post(`${baseurl}${endpoint}`, async (req, res, ctx) => {
+  //     return res(
+  //       ctx.json({
+  //         status: "success",
+  //         token: "1234345453"
+  //       })
+  //     );
+  //   })
+  // );
+
   server.use(
-    rest.post(`${baseurl}${endpoint}`, async (req, res, ctx) => {
+    rest.post(`${baseurl}${endpoints.login}`, async (req, res, ctx) => {
       return res(
+        ctx.status(400),
         ctx.json({
-          status: "success",
-          token: "1234345453"
+          status: "failed",
+          error: "user not found"
         })
       );
     })
@@ -60,11 +72,18 @@ test("WHEN Login Button clicked THEN error fields should not be on screen", asyn
   userEvent.type(inputPassword, data.password);
   userEvent.click(btnLogin);
 
-  await client(endpoint, { data });
-  screen.debug();
-  expect(screen.queryByTestId("error-username")).not.toBeInTheDocument();
-  expect(screen.queryByTestId("error-password")).not.toBeInTheDocument();
-  expect(screen.queryByTestId("server-validation")).not.toBeInTheDocument();
+  await act(() => {
+    client(endpoint, { data }).catch((e) => e);
+  });
+  await waitFor(() => {
+    expect(screen.getByTestId("server-validation")).toBeInTheDocument();
+  });
+  await waitFor(() => {
+    expect(screen.queryByTestId("error-password")).not.toBeInTheDocument();
+  });
+  await waitFor(() => {
+    expect(screen.queryByTestId("error-username")).not.toBeInTheDocument();
+  });
 });
 
 // test("WHEN Login Button clicked with missing input data THEN error fields should be displayed", async () => {

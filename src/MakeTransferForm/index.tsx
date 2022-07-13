@@ -17,7 +17,7 @@ import { LinkText } from "../Register/styles";
 import { formattedNumber } from "../utils/formattedNumber";
 import {
   TransactionDay,
-  Date,
+  DateWrapper,
   Transaction,
   TransactionAccount,
   TransactionAccountNo,
@@ -34,22 +34,25 @@ interface IRecepient {
   accountNo: string;
   accountHolder: string;
 }
-interface ITransactions {
+
+interface ITransactions extends IRecepient {
   id: string;
-  type: string;
+  transactionType: string;
   amount: number;
-  currency: string;
-  from: IRecepient;
   description: null | string;
-  date: string;
+  transactionDate: string;
+  [key: string]: any;
 }
+
 const transactionHistory = (transactions: ITransactions[]) =>
-  (transactions || []).map((item: any, key: number) => {
+  (transactions || []).map((item: ITransactions, key: number) => {
     const keyName =
       item.transactionType === "received" ? "sender" : "receipient";
+
+    const newDate = new Date(item.transactionDate);
     return (
       <TransactionDay key={item.id}>
-        <Date>{item.transactionDate}</Date>
+        <DateWrapper>{newDate.toLocaleDateString()}</DateWrapper>
         <Transaction>
           <TransactionAccount>
             <span>{item[keyName]?.accountHolder}</span>
@@ -67,10 +70,20 @@ const transactionHistory = (transactions: ITransactions[]) =>
     );
   });
 
+interface IBalance {
+  accountNo: string;
+  balance: number;
+  status: "success" | "failed";
+}
+
 export const MakeTransfer = (): JSX.Element => {
   const client = useClient();
   const [transactions, setTransactions] = useState();
-  const [balance, setBalance] = useState();
+  const [balance, setBalance] = useState<IBalance>({
+    accountNo: "",
+    balance: 0,
+    status: "success"
+  });
   const [loader, setLoader] = useState<boolean>(false);
 
   useEffect(() => {
@@ -91,16 +104,16 @@ export const MakeTransfer = (): JSX.Element => {
       const balanceData = await client(endpoints.balances, {
         method: "GET"
       });
-
-      console.log("BALANCES", balanceData);
       setLoader(false);
       setBalance(balanceData);
     };
     getUsers();
   }, [client]);
 
-  const balanceAmount = balance ? balance["balance"] : 0;
+  const balanceAmount = balance["balance"];
+  const accountNo = balance["accountNo"];
   const transactionData = transactions ? transactions["data"] : [];
+  const username = localStorage.getItem("username");
 
   if (loader) {
     return <Loader />;
@@ -112,7 +125,7 @@ export const MakeTransfer = (): JSX.Element => {
       <BalanceHolder>
         <AccountHolder>
           <Label data-testid="welcome">{WELCOME}</Label>
-          <Name data-testid="accountholder-name">Anuj Karol</Name>
+          <Name data-testid="accountholder-name">{username}</Name>
         </AccountHolder>
         <div>
           <h3>{YOU_HAVE}</h3>
@@ -124,7 +137,7 @@ export const MakeTransfer = (): JSX.Element => {
 
         <div>
           <AccountNo>{ACCOUNT_NO}</AccountNo>
-          <div data-testid="account-number">3212-123-254</div>
+          <div data-testid="account-number">{accountNo}</div>
         </div>
       </BalanceHolder>
 
